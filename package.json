@@ -1,0 +1,29 @@
+{
+	"name": "objectifier",
+	"description": "Parse any data string into a javascript object, sensing data type if it's not provided.  Also goes the other way, just cuz",
+	"main": "./lib/objectifier",
+	"directories": {
+		"lib": "./lib"
+	},
+	"author": {
+		"name": "Jason Shinn",
+		"email": "jason.shinn@cablesandkits.com"
+	},
+	"version": "0.0.1",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jmshinn/objectifier.git"
+	},
+	"bugs": {
+		"url": "https://github.com/jmshinn/objectifier/issues"
+	},
+	"devDependencies": {
+		"eyes": ">0.0.0"
+	},
+	"dependencies": {
+		"xml2js": "0.4.x"
+	},
+	"engines": {
+		"node": "0.10.x"
+	}
+}
