@@ -5,6 +5,9 @@
 	"directories": {
 		"lib": "./lib"
 	},
+	"scripts": {
+		"test": "nodeunit test/test-objectifier.js"
+	},
 	"author": {
 		"name": "Jason Shinn",
 		"email": "jason.shinn@cablesandkits.com"
@@ -18,6 +21,7 @@
 		"url": "https://github.com/jmshinn/objectifier/issues"
 	},
 	"devDependencies": {
+		"nodeunit": ">0.0.0",
 		"eyes": ">0.0.0"
 	},
 	"dependencies": {
