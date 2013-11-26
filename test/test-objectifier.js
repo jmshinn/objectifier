@@ -49,8 +49,15 @@ exports.JSON = {
 			test.deepEqual(result, {'{key': 'val', 'foo': 'bar}'}, 'Sensed JSON, malformed string fallthru to querystring');
 			test.done();
 		});
+	},
+	test7: function (test) {
+		var result = objectify('{"key": "val", "foo": "bar"}');
+		var testerr = new Error('error');
+		test.expect(2);
+		test.notEqual(result, testerr);
+		test.deepEqual(result, {key: 'val', foo: 'bar'}, 'Synchronous JSON, non-empty object');
+		test.done();
 	}
-	// should also test syncronously returning
 };
 
 exports.XML = {
@@ -119,7 +126,14 @@ exports.XML = {
 			test.done();
 		});
 	},
-	// should also test synchronously returning
+	test9: function (test) {
+		var result = objectify('<root><key foo="bar">val</key></root>');
+		var testerr = new Error('error');
+		test.expect(2);
+		test.notEqual(result, testerr);
+		test.deepEqual(result, {key: [{$: {foo: 'bar'}, _: 'val'}]}, 'Synchronous XML, non-empty object with attributes');
+		test.done();
+	}
 }
 
 exports.qstring = {
@@ -170,5 +184,13 @@ exports.qstring = {
 			test.deepEqual(result, {key: 'val', foo: 'bar'}, 'Sensed Qstring, non-empty object');
 			test.done();
 		});
+	},
+	test7: function (test) {
+		var result = objectify('key=val&foo=bar');
+		var testerr = new Error('error');
+		test.expect(2);
+		test.notEqual(result, testerr);
+		test.deepEqual(result, {key: 'val', foo: 'bar'}, 'Synchronous Qstring, non-empty object');
+		test.done();
 	}
 }
