@@ -67,4 +67,4 @@ objectify('key=val&foo=bar', 'json', function(err, result) {
 });
 ```
 
-## MORE DOCUMENTATION TO COME, IN THE MEANTIME, JUST CHECK OUT THE CODE DIRECTLY, IT'S FAIRLY STRAIGHT FORWARD
+## More documentation to come, in the meantime just check out the code directly, it's fairly straight forward
