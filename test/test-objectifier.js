@@ -1,6 +1,16 @@
+// to do: handle multiple specified format fallthru
+
 var objectify = require('../lib/objectifier').objectify;
 
 exports.JSON = {
+	test0: function (test) {
+		objectify('', 'json', function(err, result) {
+			test.expect(2);
+			test.equal(err, null);
+			test.deepEqual(result, {}, 'Explicit JSON, trivially handle empty string');
+			test.done();
+		});
+	},
 	test1: function (test) {
 		objectify('{}', 'json', function(err, result) {
 			test.expect(2);
@@ -61,6 +71,14 @@ exports.JSON = {
 };
 
 exports.XML = {
+	test0: function (test) {
+		objectify('', 'xml', function(err, result) {
+			test.expect(2);
+			test.equal(err, null);
+			test.deepEqual(result, {}, 'Explicit XML, trivially handle empty string');
+			test.done();
+		});
+	},
 	test1: function (test) {
 		objectify('<root></root>', 'xml', function(err, result) {
 			test.expect(2);
@@ -137,6 +155,14 @@ exports.XML = {
 }
 
 exports.qstring = {
+	test0: function (test) {
+		objectify('', 'query', function(err, result) {
+			test.expect(2);
+			test.equal(err, null);
+			test.deepEqual(result, {}, 'Explicit Qstring, trivially handle empty string');
+			test.done();
+		});
+	},
 	test1: function (test) {
 		objectify('', 'query', function(err, result) {
 			test.expect(2);
