@@ -1,6 +1,6 @@
 {
 	"name": "objectifier",
-	"description": "Parse any data string into a javascript object, sensing data type if it's not provided.",
+	"description": "Parse any data string into a javascript object, sensing data format if it's not provided.",
 	"main": "./lib/objectifier",
 	"directories": {
 		"lib": "./lib"
