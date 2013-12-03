@@ -68,6 +68,10 @@ objectify('key=val&foo=bar', 'json', function(err, result) {
 
 ## More documentation to come, in the meantime just check out the code directly, it's fairly straight forward
 
+## What Else?
+
+[To Do: Electric Boogaloo](https://github.com/jmshinn/objectifier/wiki/To-Do:-Electric-Boogaloo "To Do: Electric Boogaloo")
+
 ## License
 
 The MIT License (MIT)

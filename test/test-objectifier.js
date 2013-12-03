@@ -1,5 +1,3 @@
-// to do: handle multiple specified format fallthru
-
 var objectify = require('../lib/objectifier').objectify;
 
 exports.JSON = {
@@ -67,6 +65,22 @@ exports.JSON = {
 		test.notEqual(result, testerr);
 		test.deepEqual(result, {key: 'val', foo: 'bar'}, 'Synchronous JSON, non-empty object');
 		test.done();
+	},
+	test8: function (test) {
+		objectify('{"key": "val", "foo": "bar"}', 'xml qstring', function(err, result) {
+			test.expect(2);
+			test.equal(err, null);
+			test.deepEqual(result, {'{"key": "val", "foo": "bar"}': ''}, 'Sensed JSON, JSON not allowed but querystring is, fallthru to querystring');
+			test.done();
+		});
+	},
+	test9: function (test) {
+		objectify('{"key": "val", "foo": "bar"}', 'xml, json', function(err, result) {
+			test.expect(2);
+			test.equal(err, null);
+			test.deepEqual(result, {'key': 'val', 'foo': 'bar'}, 'Sensed JSON, JSON allowed');
+			test.done();
+		});
 	}
 };
 
@@ -151,6 +165,22 @@ exports.XML = {
 		test.notEqual(result, testerr);
 		test.deepEqual(result, {key: [{$: {foo: 'bar'}, _: 'val'}]}, 'Synchronous XML, non-empty object with attributes');
 		test.done();
+	},
+	test10: function (test) {
+		objectify('<root><key foo="bar">val</key></root>', 'json qstring', function(err, result) {
+			test.expect(2);
+			test.equal(err, null);
+			test.deepEqual(result, {'<root><key foo': '"bar">val</key></root>'}, 'Sensed XML, XML not allowed but querystring is, fallthru to querystring');
+			test.done();
+		});
+	},
+	test11: function (test) {
+		objectify('<root><key foo="bar">val</key></root>', 'json, xml', function(err, result) {
+			test.expect(2);
+			test.equal(err, null);
+			test.deepEqual(result, {key: [{$: {foo: 'bar'}, _: 'val'}]}, 'Sensed XML, XML allowed');
+			test.done();
+		});
 	}
 }
 
@@ -218,5 +248,22 @@ exports.qstring = {
 		test.notEqual(result, testerr);
 		test.deepEqual(result, {key: 'val', foo: 'bar'}, 'Synchronous Qstring, non-empty object');
 		test.done();
+	},
+	test8: function (test) {
+		objectify('key=val&foo=bar', 'xml json qstring', function(err, result) {
+			test.expect(2);
+			test.equal(err, null);
+			test.deepEqual(result, {'key': 'val', 'foo': 'bar'}, 'Sensed Qstring, Qstring allowed');
+			test.done();
+		});
+	},
+	test9: function (test) {
+		objectify('key=val&foo=bar', 'xml, json', function(err, result) {
+			var testerr = new Error('error');
+			test.expect(2);
+			test.deepEqual(err, testerr, 'Sensed Qstring, Qstring not allowed error');
+			test.equal(result, null, 'Sensed Qstring, Qstring not allowed result');
+			test.done();
+		});
 	}
 }
