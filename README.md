@@ -1,4 +1,4 @@
-# Objectifier
+# Objectifier [npm](https://npmjs.org/package/objectifier "npm")
 
 Objectifier is a format-agnostic translator from a string to a javascript object.
 
@@ -7,6 +7,10 @@ It's a fairly thin wrapper around JSON.parse, [xml2js](https://github.com/Leonid
 * It allows us to use a single interface to parse incoming data into easily digestible javascript objects.
 * It allows us to not care about the actual format of incoming data, though if specific formats are malformed then you won't get the data structure you expect, it just won't cause an error
 * Currently, both JSON parsing and querystring parsing are synchronous. Using this interface allows us to implement asynchronous methods in the future without any change in the interface.
+
+## Installation
+
+    $ npm install objectifier
 
 ## Usage
 
