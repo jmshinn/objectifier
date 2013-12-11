@@ -1,4 +1,5 @@
 var objectify = require('../lib/objectifier').objectify;
+var stringify = require('../lib/objectifier').stringify;
 
 exports.JSON = {
 	test0: function (test) {
@@ -263,6 +264,36 @@ exports.qstring = {
 			test.expect(2);
 			test.deepEqual(err, testerr, 'Sensed Qstring, Qstring not allowed error');
 			test.equal(result, null, 'Sensed Qstring, Qstring not allowed result');
+			test.done();
+		});
+	}
+}
+
+var smplobj = { key: 'val', foo: 'bar' };
+var xmlobj = { key: [{ $: { foo: 'bar' }, _: 'val' }] };
+
+exports.stringify = {
+	test0: function (test) {
+		stringify({}, 'qstring', function(err, result) {
+			test.expect(2);
+			test.equal(err, null);
+			test.deepEqual(result, '', 'Stringify Qstring, empty object');
+			test.done();
+		});
+	},
+	test1: function (test) {
+		stringify({}, 'json', function(err, result) {
+			test.expect(2);
+			test.equal(err, null);
+			test.deepEqual(result, '{}', 'Stringify JSON, empty object');
+			test.done();
+		});
+	},
+	test2: function (test) {
+		stringify({}, 'xml', function(err, result) {
+			test.expect(2);
+			test.equal(err, null);
+			test.deepEqual(result, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<root/>\n', 'Stringify XML, empty object');
 			test.done();
 		});
 	}
