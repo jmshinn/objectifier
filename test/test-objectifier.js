@@ -106,7 +106,7 @@ exports.XML = {
 		objectify('<root><key>val</key></root>', 'XML', function(err, result) {
 			test.expect(2);
 			test.equal(err, null);
-			test.deepEqual(result, {key: ['val']}, 'Explicit XML, non-empty object');
+			test.deepEqual(result, {key: 'val'}, 'Explicit XML, non-empty object');
 			test.done();
 		});
 	},
@@ -114,7 +114,7 @@ exports.XML = {
 		objectify('<root><key foo="bar">val</key></root>', ' xml ', function(err, result) {
 			test.expect(2);
 			test.equal(err, null);
-			test.deepEqual(result, {key: [{$: {foo: 'bar'}, _: 'val'}]}, 'Explicit XML, non-empty object with attributes');
+			test.deepEqual(result, {key: {$: {foo: 'bar'}, _: 'val'}}, 'Explicit XML, non-empty object with attributes');
 			test.done();
 		});
 	},
@@ -139,7 +139,7 @@ exports.XML = {
 		objectify('<root><key>val</key></root>', function(err, result) {
 			test.expect(2);
 			test.equal(err, null);
-			test.deepEqual(result, {key: ['val']}, 'Sensed XML, non-empty object');
+			test.deepEqual(result, {key: 'val'}, 'Sensed XML, non-empty object');
 			test.done();
 		});
 	},
@@ -147,7 +147,7 @@ exports.XML = {
 		objectify('<root><key foo="bar">val</key></root>', function(err, result) {
 			test.expect(2);
 			test.equal(err, null);
-			test.deepEqual(result, {key: [{$: {foo: 'bar'}, _: 'val'}]}, 'Sensed XML, non-empty object with attributes');
+			test.deepEqual(result, {key: {$: {foo: 'bar'}, _: 'val'}}, 'Sensed XML, non-empty object with attributes');
 			test.done();
 		});
 	},
@@ -164,7 +164,7 @@ exports.XML = {
 		var testerr = new Error('error');
 		test.expect(2);
 		test.notEqual(result, testerr);
-		test.deepEqual(result, {key: [{$: {foo: 'bar'}, _: 'val'}]}, 'Synchronous XML, non-empty object with attributes');
+		test.deepEqual(result, {key: {$: {foo: 'bar'}, _: 'val'}}, 'Synchronous XML, non-empty object with attributes');
 		test.done();
 	},
 	test10: function (test) {
@@ -179,7 +179,7 @@ exports.XML = {
 		objectify('<root><key foo="bar">val</key></root>', 'json, xml', function(err, result) {
 			test.expect(2);
 			test.equal(err, null);
-			test.deepEqual(result, {key: [{$: {foo: 'bar'}, _: 'val'}]}, 'Sensed XML, XML allowed');
+			test.deepEqual(result, {key: {$: {foo: 'bar'}, _: 'val'}}, 'Sensed XML, XML allowed');
 			test.done();
 		});
 	}
@@ -270,7 +270,7 @@ exports.qstring = {
 }
 
 var smplobj = { key: 'val', foo: 'bar' };
-var xmlobj = { key: [{ $: { foo: 'bar' }, _: 'val' }] };
+var xmlobj = { key: { $: { foo: 'bar' }, _: 'val' } };
 
 exports.stringify = {
 	test0: function (test) {
@@ -293,7 +293,39 @@ exports.stringify = {
 		stringify({}, 'xml', function(err, result) {
 			test.expect(2);
 			test.equal(err, null);
-			test.deepEqual(result, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<root/>\n', 'Stringify XML, empty object');
+			test.deepEqual(result, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><root/>', 'Stringify XML, empty object');
+			test.done();
+		});
+	},
+	test3: function (test) {
+		stringify(smplobj, 'qstring', function(err, result) {
+			test.expect(2);
+			test.equal(err, null);
+			test.deepEqual(result, 'key=val&foo=bar', 'Stringify Qstring, simple object');
+			test.done();
+		});
+	},
+	test4: function (test) {
+		stringify(smplobj, 'json', function(err, result) {
+			test.expect(2);
+			test.equal(err, null);
+			test.deepEqual(result, '{"key":"val","foo":"bar"}', 'Stringify JSON, simple object');
+			test.done();
+		});
+	},
+	test5: function (test) {
+		stringify(smplobj, 'xml', function(err, result) {
+			test.expect(2);
+			test.equal(err, null);
+			test.deepEqual(result, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><root><key>val</key><foo>bar</foo></root>', 'Stringify XML, simple object');
+			test.done();
+		});
+	},
+	test6: function (test) {
+		stringify(xmlobj, 'xml', function(err, result) {
+			test.expect(2);
+			test.equal(err, null);
+			test.deepEqual(result, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><key foo="bar">val</key>', 'Stringify XML, complext object');
 			test.done();
 		});
 	}
